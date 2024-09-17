@@ -29,7 +29,7 @@ export const SignIn=async (formData:SignInFormData)=>{
     if(!response.ok){
         throw new Error(body.message)
     }
-    return body
+    return body 
 }
 
 export const validateToken=async()=>{
@@ -51,4 +51,16 @@ export const signOut=async()=>{
         throw new Error("Error during sign-out")
     }
     //return await response.json()
+}
+
+export const addMyHotel=async (hotelFormData:FormData)=>{
+    console.log(Array.from(hotelFormData)) 
+    const response=await fetch(`${API_BASE_URL}/api/my-hotels`,{
+        method:"POST",
+        credentials:"include",
+        body:hotelFormData
+    })
+    console.log("fetch api")
+    if(!response.ok)throw new Error("Failed to add Hotel")
+    return response.json()
 }
