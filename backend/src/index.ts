@@ -19,9 +19,9 @@ app.use(cookieParser())
 app.use(express.json());//convert api body request into json automatically
 app.use(express.urlencoded({extended:true})); //
 app.use(cors({
-    origin:process.env.FRONTEND_URL, 
-    credentials:true
-})); //it prevents certain request from certain url 
+    origin:process.env.FRONTEND_URL,   
+    credentials:true 
+})); //it prevents certain request from certain url  
  
 app.use(express.static(path.join(__dirname,"../../frontend/dist")))
 app.use("/api/auth",authRoutes)
