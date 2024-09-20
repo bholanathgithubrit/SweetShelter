@@ -11,6 +11,7 @@ import AddHotel from "./pages/AddHotel";
 import MyHotels from "./pages/MyHotels"
 import { useAppContext } from "./contexts/AppContext";
 import EditHotel from "./pages/EditHotel";
+import Search from "./pages/Search";
 const App=()=>{
   const {isLoggedIn}=useAppContext()
 
@@ -24,6 +25,7 @@ const App=()=>{
         <Route path="/add-hotel" element={<Layout><AddHotel/></Layout>}/>
         <Route path="/my-hotels" element={<Layout><MyHotels/></Layout>}/>
         <Route path="/edit-hotel/:hotelId" element={<Layout><EditHotel/></Layout>}/>
+        <Route path="/search" element={<Layout><Search/></Layout>}/>
         </>)}
         <Route path="*" element={<Navigate to="/"/>}/>
       </Routes>

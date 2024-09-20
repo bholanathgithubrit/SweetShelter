@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client"
 import './index.css'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { AppContextProvider } from './contexts/AppContext.tsx'
+import { SearchContextProvider } from './contexts/SearchContext.tsx'
 //react query is used to handle query immediatly
 //if a query failed it can not re-retry again it give error
 const queryClient = new QueryClient({
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AppContextProvider>
-      <App />
+        <SearchContextProvider>
+          <App />
+        </SearchContextProvider>
       </AppContextProvider>
     </QueryClientProvider>
   </React.StrictMode>,

@@ -14,6 +14,15 @@ type AppContext={
 
 const AppContext=React.createContext<AppContext | undefined>(undefined)
 //you can share data and functionality between components without having to pass props down manually. 
+
+//why we use context
+//when we have an parent componenet and multiple chile component 
+//if we have to pass one value to the nested nested componenet 
+//instead of sending like tree we can make context and then ant child
+//can access the value
+
+//contextProvider=>any child under the parent can access the value
+
 export const AppContextProvider=({children}:{children:React.ReactNode})=>{
 
     const [toast,setToast]=useState<ToastMessage | undefined>(undefined)
