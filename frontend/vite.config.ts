@@ -1,9 +1,7 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  build: {
-    rollupOptions: {
-      external: ['react-datepicker/dist/react-datepicker.css'],
-    },
-  },
-});
+  plugins: [react()],
+})
