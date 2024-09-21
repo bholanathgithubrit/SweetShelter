@@ -14,6 +14,7 @@ const Register = () => {
   const queryClient=useQueryClient()
     const {showToast} =useAppContext()
   const navigate=useNavigate()
+
   const {
     register,
     watch,

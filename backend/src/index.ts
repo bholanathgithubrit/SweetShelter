@@ -7,7 +7,7 @@ import authRoutes from "./routes/auth"
 import cookieParser from "cookie-parser"
 import path from "path"; 
 import {v2 as cloudinary} from "cloudinary"
-import myHotelRoutes from "./routes/my-hotels"
+import myHotelRoutes from "./routes/my-hotels" 
 import hotelRoutes from "./routes/hotels"
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then((data)=>console.log("connect")).catch((err)=>console.log(err)) 
 cloudinary.config({ 
