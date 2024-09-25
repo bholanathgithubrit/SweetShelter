@@ -1,48 +1,53 @@
-import React, { useContext,useState } from "react"
-import Toast from "../components/Toast"
-import { useQuery } from "react-query"
-import * as apiClient from "../api-client.ts"
-type ToastMessage={
-    message:string,
-    type:"SUCCESS" | "ERROR"
-}
+import React, { useContext, useState } from "react";
+import Toast from "../components/Toast";
+import { useQuery } from "react-query";
+import * as apiClient from "../api-client.ts";
+import {loadStripe,Stripe} from "@stripe/stripe-js"
+const STRIPE_PUB_KEY = import.meta.env.VITE_STRIPE_PUB_KEY || "";
 
-type AppContext={
-    showToast: (toastMessage:ToastMessage)=> void
-    isLoggedIn:boolean
-}
+type ToastMessage = {
+  message: string;
+  type: "SUCCESS" | "ERROR";
+};
 
-const AppContext=React.createContext<AppContext | undefined>(undefined)
-//you can share data and functionality between components without having to pass props down manually. 
+type AppContext = {
+  showToast: (toastMessage: ToastMessage) => void;
+  isLoggedIn: boolean;
+  stripePromise: Promise<Stripe | null>;
+};
 
-//why we use context
-//when we have an parent componenet and multiple chile component 
-//if we have to pass one value to the nested nested componenet 
-//instead of sending like tree we can make context and then ant child
-//can access the value
+const AppContext = React.createContext<AppContext | undefined>(undefined);
 
-//contextProvider=>any child under the parent can access the value
 
-export const AppContextProvider=({children}:{children:React.ReactNode})=>{
 
-    const [toast,setToast]=useState<ToastMessage | undefined>(undefined)
-    const {isError}=useQuery("validateToken",apiClient.validateToken,{
-        retry:false
-    })
-    
-    return(
-        <AppContext.Provider value={{showToast:(ToastMessage)=>{
-            setToast(ToastMessage)
-            console.log(ToastMessage)
+const stripePromise = loadStripe(STRIPE_PUB_KEY);
+
+export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
+  const [toast, setToast] = useState<ToastMessage | undefined>(undefined);
+  const { isError } = useQuery("validateToken", apiClient.validateToken, {
+    retry: false,
+  });
+
+  return (
+    <AppContext.Provider
+      value={{
+        showToast: (ToastMessage) => {
+          setToast(ToastMessage);
+          console.log(ToastMessage);
         },
-        isLoggedIn:!isError}}>
-            {toast && (<Toast message={toast.message} type={toast.type} onClose={()=>setToast(undefined)}/>)}
-            {children}
-        </AppContext.Provider>
-    )
-}
+        isLoggedIn: !isError,
+        stripePromise,
+      }}
+    >
+      {toast && (
+        <Toast message={toast.message} type={toast.type} onClose={() => setToast(undefined)} />
+      )}
+      {children}
+    </AppContext.Provider>
+  );
+};
 
-export const useAppContext=()=>{
-    const context=useContext(AppContext)
-    return context as AppContext
-}
+export const useAppContext = () => {
+  const context = useContext(AppContext);
+  return context as AppContext;
+};

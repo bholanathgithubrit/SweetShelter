@@ -16,12 +16,12 @@ type SearchContextProviderProps={
 const SearchContext=React.createContext<SearchContext | undefined>(undefined)
 
 export const SearchContextProvider=({children}:SearchContextProviderProps)=>{
-    const [destination,setDestination]=useState<string>("")
-    const [checkIn,setcheckIn]=useState<Date>(new Date())
-    const [checkOut,setcheckOut]=useState<Date>(new Date())
-    const [adultCount,setAdultcount]=useState<number>(1)
-    const [childCount,setChildcount]=useState<number>(0)
-    const [hotelId,setHotelId]=useState<string>("")
+    const [destination,setDestination]=useState<string>(()=>sessionStorage.getItem("destination")|| "")
+    const [checkIn,setcheckIn]=useState<Date>(()=>new Date(sessionStorage.getItem("checkIn") || new Date().toISOString()))
+    const [checkOut,setcheckOut]=useState<Date>(()=>new Date(sessionStorage.getItem("checkOut") || new Date().toISOString()))
+    const [adultCount,setAdultcount]=useState<number>(()=>parseInt(sessionStorage.getItem("adultCount") || "1"))
+    const [childCount,setChildcount]=useState<number>(()=>parseInt(sessionStorage.getItem("childCount")|| "0"))
+    const [hotelId,setHotelId]=useState<string>(()=>sessionStorage.getItem("hotelId")||"")
 
     const saveSearchValues=async (destination: string, checkIn: Date, checkOut: Date, adultCount: number, childCount: number,hotelId?:string)=>{
         setDestination(destination)
@@ -30,6 +30,12 @@ export const SearchContextProvider=({children}:SearchContextProviderProps)=>{
         setAdultcount(adultCount)
         setChildcount(childCount)
         if(hotelId)setHotelId(hotelId)
+        sessionStorage.setItem("destination",destination)
+        sessionStorage.setItem("checkIn",checkIn.toISOString())
+        sessionStorage.setItem("checkOut",checkOut.toISOString())
+        sessionStorage.setItem("adultCount",adultCount.toString())
+        sessionStorage.setItem("childCount",childCount.toString())
+        if(hotelId)sessionStorage.setItem("destination",hotelId.toString())
     }
 
     return(

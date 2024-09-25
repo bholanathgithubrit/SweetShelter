@@ -1,9 +1,24 @@
 import express,{Request,Response} from "express"
 import User from "../models/user"
 import jwt from "jsonwebtoken"
-import { register } from "module"
+import { register, ResolveFnOutput } from "module"
 import { check, validationResult } from "express-validator"
+import verifyToken from "../middleware/auth"
 const router=express.Router()
+
+router.get("/me",verifyToken,async (req:Request,res:Response)=>{
+    const userId=req.userId
+
+    try{
+        const user=await User.findById(userId).select("-password")
+        if(!user)res.status(404).json({messgae:"User Not found"})
+        res.json(user)
+
+    }catch(err){
+        console.log(err)
+        res.status(404).json({message:"Error in Booking Hotel"})
+    }
+})
 
 router.post("/register",[
     check("firstName","First name is required").isString(),
