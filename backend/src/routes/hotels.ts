@@ -51,6 +51,17 @@ router.get("/search", async (req: Request, res: Response) => {
   }
 });
 
+
+router.get("/",async (req:Request,res:Response)=>{
+  try{
+    const hotel=await Hotel.find().sort("-lastUpdated")
+    res.json(hotel)
+  }catch(err){
+    console.log(err)
+    res.status(404).json({message:"No Hotels Found"})
+  }
+})
+
 // /api/hotel/:976
 router.get(
   "/:id",

@@ -85,6 +85,13 @@ export const fetchMyHotels=async ():Promise<HotelType[]>=>{
     return response.json()
 }
 
+export const fetchHotels=async ():Promise<HotelType[]>=>{
+    const response=await fetch(`${API_BASE_URL}/api/hotels`)
+    if(!response.ok) throw new Error("Error Fetching Hotels")
+        console.log(response)
+    return response.json()
+}
+
 export const fetchMyHotelById=async (hotelId:string):Promise<HotelType>=>{
     const response=await fetch(`${API_BASE_URL}/api/my-hotels/${hotelId}`,{
         credentials:"include"
@@ -193,3 +200,4 @@ export const createPaymentIntent = async (
 
     return response.json()
   }
+
