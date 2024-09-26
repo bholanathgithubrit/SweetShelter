@@ -14,6 +14,7 @@ import EditHotel from "./pages/EditHotel";
 import Search from "./pages/Search";
 import Details from "./pages/Details";
 import Booking from "./pages/Booking";
+import MyBookings from "./pages/MyBookings";
 const App=()=>{
   const {isLoggedIn}=useAppContext()
 
@@ -30,6 +31,7 @@ const App=()=>{
         <Route path="/my-hotels" element={<Layout><MyHotels/></Layout>}/>
         <Route path="/edit-hotel/:hotelId" element={<Layout><EditHotel/></Layout>}/>
         <Route path="/hotel/:hotelId/booking" element={<Layout><Booking/></Layout>} />
+        <Route path="/my-bookings" element={<Layout><MyBookings/></Layout>} />
         </>)}
         <Route path="*" element={<Navigate to="/"/>}/>
       </Routes>
